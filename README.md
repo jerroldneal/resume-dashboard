@@ -4,15 +4,15 @@ AI-powered resume generation and interview preparation dashboard. Tailor resumes
 
 ## Features
 
-✅ **Application Management** — Track job applications with company, position, job description, and notes  
-✅ **Resume Generation** — LLM-powered resume tailoring based on job requirements  
-✅ **Gap Analysis** — Compare resume against job description to identify missing qualifications  
-✅ **Fact Checking** — Verify resume claims for credibility and accuracy  
-✅ **PDF Export** — Convert markdown resumes to PDF using Pandoc + XeLaTeX  
-✅ **Interview Prep** — Generate likely interview questions with suggested answers and "truthful outs"  
-✅ **Prompt Templates** — Manage and customize LLM prompts for requirement extraction, resume generation, gap analysis, and fact checking  
-✅ **Resume Archive** — Library of past resumes for reference and reuse  
-✅ **Settings** — Configure theme (dark/light/auto), LLM endpoint, and data folders  
+✅ **Application Management** — Track job applications with company, position, job description, and notes
+✅ **Resume Generation** — LLM-powered resume tailoring based on job requirements
+✅ **Gap Analysis** — Compare resume against job description to identify missing qualifications
+✅ **Fact Checking** — Verify resume claims for credibility and accuracy
+✅ **PDF Export** — Convert markdown resumes to PDF using Pandoc + XeLaTeX
+✅ **Interview Prep** — Generate likely interview questions with suggested answers and "truthful outs"
+✅ **Prompt Templates** — Manage and customize LLM prompts for requirement extraction, resume generation, gap analysis, and fact checking
+✅ **Resume Archive** — Library of past resumes for reference and reuse
+✅ **Settings** — Configure theme (dark/light/auto), LLM endpoint, and data folders
 ✅ **Real-time Updates** — Server-Sent Events (SSE) for live progress during LLM operations
 
 ## Tech Stack
@@ -56,7 +56,7 @@ docker compose up
 open http://localhost:4445
 ```
 
-Backend API: `http://localhost:4446`  
+Backend API: `http://localhost:4446`
 Backend Health: `http://localhost:4446/health`
 
 ### Data Persistence
@@ -208,22 +208,22 @@ npm run dev
 ## Troubleshooting
 
 **Issue: PDF generation fails**
-- **Cause:** Pandoc or XeLaTeX not installed  
-- **Solution:** Rebuild Docker image: `docker compose up --build`  
+- **Cause:** Pandoc or XeLaTeX not installed
+- **Solution:** Rebuild Docker image: `docker compose up --build`
 - **Verification:** `docker exec -it resume-dashboard-backend-1 pandoc --version`
 
 **Issue: LLM generation slow/fails**
-- **Cause:** Ollama not running or wrong model  
-- **Solution:** Start Ollama, pull model: `ollama pull llama2`  
+- **Cause:** Ollama not running or wrong model
+- **Solution:** Start Ollama, pull model: `ollama pull llama2`
 - **Verification:** `curl http://localhost:11434/api/version` should return JSON
 
 **Issue: Frontend shows CORS error**
-- **Cause:** Backend not accessible  
-- **Solution:** Check backend logs: `docker logs resume-dashboard-backend-1`  
+- **Cause:** Backend not accessible
+- **Solution:** Check backend logs: `docker logs resume-dashboard-backend-1`
 - **Verification:** `curl http://localhost:4446/health` should return `{"status":"healthy"}`
 
 **Issue: Changes not reflected in Docker**
-- **Cause:** Cached image  
+- **Cause:** Cached image
 - **Solution:** Rebuild: `docker compose up --build`
 
 ## License

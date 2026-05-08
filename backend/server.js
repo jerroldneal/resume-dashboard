@@ -5,9 +5,9 @@ import { fileURLToPath } from 'url';
 import applicationsRouter from './routes/applications.js';
 import eventsRouter from './routes/events.js';
 import tryoutsRouter from './routes/tryouts.js';
-import { initializeStorage } from './services/storageService.js';
 import { convertMarkdownToPDF, getPDFBuffer } from './services/pandocService.js';
 import { generateInterviewPrimer } from './services/primerService.js';
+import { initializeStorage } from './services/storageService.js';
 
 // ES modules __dirname equivalent
 const __filename = fileURLToPath(import.meta.url);
@@ -63,7 +63,7 @@ app.get('/api/applications/:id/primer', async (req, res) => {
     const applicationId = req.params.id;
     const { getPrimer } = await import('./services/storageService.js');
     const primer = await getPrimer(applicationId);
-    
+
     if (!primer) {
       return res.status(404).json({ error: 'No primer found for this application' });
     }
@@ -128,11 +128,11 @@ app.post('/api/applications/:id/primer/generate', async (req, res) => {
 app.post('/api/tryouts/:id/pdf', async (req, res) => {
   try {
     const tryoutId = req.params.id;
-    
+
     // Get tryout from storage
     const { getTryout } = await import('./services/storageService.js');
     const tryout = await getTryout(tryoutId);
-    
+
     if (!tryout) {
       return res.status(404).json({ error: 'Tryout not found' });
     }
@@ -171,7 +171,7 @@ app.get('/api/tryouts/:id/pdf/download', async (req, res) => {
     // Set headers for download
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename="resume-${tryoutId}.pdf"`);
-    
+
     res.send(buffer);
   } catch (error) {
     console.error('[PDF] Download error:', error);

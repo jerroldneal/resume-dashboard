@@ -39,7 +39,7 @@ Return ONLY valid JSON in this exact format (no markdown, no extra text):
 
   try {
     const response = await callLLM(prompt);
-    
+
     // Parse LLM response (should be JSON)
     let primerData;
     try {
@@ -63,7 +63,7 @@ Return ONLY valid JSON in this exact format (no markdown, no extra text):
     primerData.generated = new Date().toISOString();
 
     console.log(`[PRIMER] Generated ${primerData.questions.length} questions`);
-    
+
     return primerData;
   } catch (error) {
     console.error('[PRIMER] Generation error:', error);

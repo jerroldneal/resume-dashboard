@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --dockhand-bg: #0a0e27;
+  --dockhand-surface: #111827;
+  --dockhand-primary: #3b82f6;
+  --dockhand-text: #f9fafb;
+  --dockhand-border: #374151;
+}
+
+.dark {
+  --dockhand-bg: #0a0e27;
+  --dockhand-surface: #111827;
+  --dockhand-primary: #3b82f6;
+  --dockhand-text: #f9fafb;
+  --dockhand-border: #374151;
+}
+
+.light {
+  --dockhand-bg: #f9fafb;
+  --dockhand-surface: #ffffff;
+  --dockhand-primary: #2563eb;
+  --dockhand-text: #111827;
+  --dockhand-border: #d1d5db;
+}
