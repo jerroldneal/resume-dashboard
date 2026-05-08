@@ -10,8 +10,6 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    environment:
-      - VITE_API_URL=http://localhost:4446
     depends_on:
       - backend
     restart: unless-stopped
