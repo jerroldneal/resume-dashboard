@@ -10,7 +10,7 @@ export default function SettingsTab() {
     llm: {
       provider: 'ollama',
       endpoint: 'http://localhost:11434',
-      model: 'llama2'
+      model: 'qwen2.5:1.5b'
     }
   })
 
@@ -86,10 +86,12 @@ export default function SettingsTab() {
     setTesting(true)
     setConnectionStatus(null)
     try {
+      console.log(`Testing connection to ${settings.llm.endpoint}/api/version`)
       const res = await fetch(`${settings.llm.endpoint}/api/version`, {
         method: 'GET'
       })
       if (res.ok) {
+        console.log('Connection successful!', await res.json());
         setConnectionStatus({ success: true, message: 'Connection successful!' })
       } else {
         setConnectionStatus({ success: false, message: `HTTP ${res.status}` })
@@ -225,7 +227,7 @@ export default function SettingsTab() {
                     llm: { ...settings.llm, model: e.target.value }
                   })}
                   className="w-full p-2 border border-dockhand-border rounded bg-dockhand-bg text-dockhand-text"
-                  placeholder="llama2"
+                  placeholder="qwen2.5:1.5b"
                 />
               </div>
 

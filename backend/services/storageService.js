@@ -390,8 +390,8 @@ export async function getSettings() {
       },
       llm: {
         provider: 'ollama',
-        endpoint: 'http://localhost:11434',
-        model: 'llama3.2:3b'
+        endpoint: process.env.LLM_ENDPOINT || 'http://localhost:11434',
+        model: process.env.LLM_MODEL || 'qwen2.5:1.5b'
       }
     };
   }

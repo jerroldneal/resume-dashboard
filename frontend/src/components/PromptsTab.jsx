@@ -93,7 +93,7 @@ Return ONLY valid JSON, no markdown formatting.`,
   const [selectedPrompt, setSelectedPrompt] = useState(null)
   const [isEditing, setIsEditing] = useState(false)
   const [editedTemplate, setEditedTemplate] = useState('')
-  const [testInput, setTestInput] = useState('')
+  const [testInputs, setTestInputs] = useState({})
   const [testOutput, setTestOutput] = useState(null)
   const [testing, setTesting] = useState(false)
   const [showTestModal, setShowTestModal] = useState(false)
@@ -126,76 +126,12 @@ Return ONLY valid JSON, no markdown formatting.`,
 
   function handleTestClick(prompt) {
     setSelectedPrompt(prompt)
-    setTestInput('')
+    setTestInputs({})
     setTestOutput(null)
     setShowTestModal(true)
   }
 
-  async function handleRunTest() {
-    setTesting(true)
-    try {
-      let processed = selectedPrompt.template
-      selectedPrompt.variables.forEach(varName => {
-        processed = processed.replace(`{${varName}}`, testInput || `[Sample ${varName}]`)
-      })
-
-      setTestOutput({
-        processed_prompt: processed,
-        note: 'Backend API not yet implemented - showing template preview'
-      })
-    } catch (err) {
-      setTestOutput({ error: err.message })
-    } finally {
-      setTesting(false)
-    }
-  }
-
-  if (!isEditing) {
-    return (
-      <div className="p-6">
-        <h2 className="text-2xl font-bold mb-6 text-dockhand-text">Prompt Templates</h2>
-
-        <div className="space-y-4">
-          {prompts.map(prompt => (
-            <div
-              key={prompt.id}
-              className="bg-dockhand-surface border border-dockhand-border rounded-lg p-6"
-            >
-              <div className="flex justify-between items-start mb-2">
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-dockhand-text mb-1">
-                    📝 {prompt.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                    {prompt.description}
-                  </p>
-                  <div className="text-xs text-gray-500 dark:text-gray-500">
-                    Variables: {prompt.variables.map(v => `{${v}}`).join(', ')}
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleEditClick(prompt)}
-                    className="px-4 py-2 bg-dockhand-primary text-white rounded hover:opacity-90 transition"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleTestClick(prompt)}
-                    className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-dockhand-text rounded hover:opacity-90 transition"
-                  >
-                    Test
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    )
-  }
-
-  if (isEditing && selectedPrompt) {
+  function EditingView() {
     return (
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
@@ -256,50 +192,163 @@ Return ONLY valid JSON, no markdown formatting.`,
     )
   }
 
-  return showTestModal && selectedPrompt ? (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-dockhand-bg border border-dockhand-border rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold text-dockhand-text">
-            Test: {selectedPrompt.name}
-          </h3>
-          <button
-            onClick={() => setShowTestModal(false)}
-            className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition"
-          >
-            ✕ Close
-          </button>
+  function PromptsView() {
+    return (
+      <div className="p-6">
+        <h2 className="text-2xl font-bold mb-6 text-dockhand-text">Prompt Templates</h2>
+
+        <div className="space-y-4">
+          {prompts.map(prompt => (
+            <div
+              key={prompt.id}
+              className="bg-dockhand-surface border border-dockhand-border rounded-lg p-6"
+            >
+              <div className="flex justify-between items-start mb-2">
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold text-dockhand-text mb-1">
+                    📝 {prompt.name}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                    {prompt.description}
+                  </p>
+                  <div className="text-xs text-gray-500 dark:text-gray-500">
+                    Variables: {prompt.variables.map(v => `{${v}}`).join(', ')}
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleEditClick(prompt)}
+                    className="px-4 py-2 bg-dockhand-primary text-white rounded hover:opacity-90 transition"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleTestClick(prompt)}
+                    className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-dockhand-text rounded hover:opacity-90 transition"
+                  >
+                    Test
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2 text-dockhand-text">
-            Sample Input ({selectedPrompt.variables[0]}):
-          </label>
-          <textarea
-            value={testInput}
-            onChange={(e) => setTestInput(e.target.value)}
-            className="w-full h-32 p-2 border border-dockhand-border rounded bg-dockhand-surface text-dockhand-text"
-            placeholder={`Enter sample ${selectedPrompt.variables[0]} text...`}
-          />
-        </div>
-
-        <button
-          onClick={handleRunTest}
-          disabled={testing}
-          className="px-4 py-2 bg-dockhand-primary text-white rounded disabled:opacity-50 transition mb-4"
-        >
-          {testing ? 'Testing...' : 'Run Test'}
-        </button>
-
-        {testOutput && (
-          <div className="bg-dockhand-surface border border-dockhand-border rounded p-4">
-            <h4 className="font-semibold text-sm mb-2 text-dockhand-text">Output:</h4>
-            <pre className="text-xs text-dockhand-text whitespace-pre-wrap overflow-x-auto">
-              {JSON.stringify(testOutput, null, 2)}
-            </pre>
-          </div>
-        )}
       </div>
-    </div>
-  ) : null
+    )
+  }
+
+  function TestView() {
+    return showTestModal && selectedPrompt ? (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-dockhand-bg border border-dockhand-border rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-xl font-bold text-dockhand-text">
+              Test: {selectedPrompt.name}
+            </h3>
+            <button
+              onClick={() => setShowTestModal(false)}
+              className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition"
+            >
+              ✕ Close
+            </button>
+          </div>
+
+          {selectedPrompt.variables.map((varName, idx) => (
+            <div key={varName} className="mb-4">
+              <label className="block text-sm font-semibold mb-2 text-dockhand-text">
+                {varName}:
+              </label>
+              <textarea
+                value={testInputs[varName] || ''}
+                onChange={(e) => setTestInputs(prev => ({ ...prev, [varName]: e.target.value }))}
+                className="w-full h-20 p-2 border border-dockhand-border rounded bg-dockhand-surface text-dockhand-text text-sm"
+                placeholder={`Enter sample for ${varName}...`}
+              />
+            </div>
+          ))}
+
+          <button
+            onClick={handleRunTest}
+            disabled={testing}
+            className="px-4 py-2 bg-dockhand-primary text-white rounded disabled:opacity-50 transition mb-4 w-full"
+          >
+            {testing ? 'Testing...' : 'Run Test'}
+          </button>
+
+          {testOutput && (
+            <div className="bg-dockhand-surface border border-dockhand-border rounded p-4">
+              <h4 className="font-semibold text-sm mb-2 text-dockhand-text">Output:</h4>
+              <pre className="text-xs text-dockhand-text whitespace-pre-wrap overflow-x-auto">
+                {JSON.stringify(testOutput, null, 2)}
+              </pre>
+            </div>
+          )}
+        </div>
+      </div>
+    ) : null
+  }
+
+  async function handleRunTest() {
+    console.log(`Running test for prompt: ${selectedPrompt.name} with inputs:`, testInputs)
+    setTesting(true)
+    try {
+      // Prepare input variables with sample values
+      const inputVariables = {};
+      selectedPrompt.variables.forEach(varName => {
+        inputVariables[varName] = testInputs[varName] || `[Sample ${varName}]`;
+      });
+
+      // Call backend API to test prompt
+      const res = await fetch(`/api/prompts/${selectedPrompt.id}/test`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          inputVariables,
+          prompt: selectedPrompt.template
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setTestOutput({
+          error: data.error || `HTTP ${res.status}`,
+          details: data.stack
+        });
+        return;
+      }
+
+      setTestOutput(data);
+    } catch (err) {
+      setTestOutput({
+        error: err.message,
+        details: 'Fetch failed - check if backend is running'
+      });
+    } finally {
+      setTesting(false);
+    }
+  }
+
+  if (showTestModal) {
+    console.log('Rendering test modal for prompt:', selectedPrompt ? selectedPrompt.name : 'None', { testInputs, testOutput })
+    if (selectedPrompt) {
+      console.log(`Rendering test modal for prompt: ${selectedPrompt.name}`, { testInputs, testOutput })
+      return <TestView />
+    }
+  }
+
+  if (isEditing) {
+    if (selectedPrompt) {
+      return (
+        <EditingView />
+      )
+    }
+  } else {
+    return (
+      <PromptsView />
+    )
+  }
+
+  return <TestView />
+
 }

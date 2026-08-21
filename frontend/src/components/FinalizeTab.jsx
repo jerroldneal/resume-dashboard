@@ -64,7 +64,7 @@ export default function FinalizeTab() {
 
   async function fetchTryoutContent(tryoutId) {
     try {
-      const res = await fetch(`/api/tryouts/${tryoutId}`)
+      const res = await fetch(`/api/applications/${selectedAppId}/tryouts/${tryoutId}`)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = await res.json()
       setResumeContent(data.data?.resumeContent || '')
@@ -77,7 +77,7 @@ export default function FinalizeTab() {
     setGenerating(true)
     setError(null)
     try {
-      const res = await fetch(`/api/tryouts/${selectedTryoutId}/pdf`, {
+      const res = await fetch(`/api/applications/${selectedAppId}/tryouts/${selectedTryoutId}/pdf`, {
         method: 'POST'
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -91,7 +91,7 @@ export default function FinalizeTab() {
 
   async function handleDownloadPDF() {
     try {
-      const res = await fetch(`/api/tryouts/${selectedTryoutId}/pdf/download`)
+      const res = await fetch(`/api/applications/${selectedAppId}/tryouts/${selectedTryoutId}/pdf/download`)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
       const blob = await res.blob()

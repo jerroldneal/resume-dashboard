@@ -1,0 +1,30 @@
+{
+  "id": "50a390b8-4389-4d5a-a2e8-fd765d99e688",
+  "applicationId": "0c9216cf-1a83-4573-a6ae-586d1e39b71c",
+  "version": 1,
+  "createdAt": "2026-08-20T05:22:33.175Z",
+  "updatedAt": "2026-08-20T05:28:43.555Z",
+  "gapAnalysis": {
+    "coverage": 80,
+    "gaps": [
+      {
+        "requirement": "Strong full-stack depth.",
+        "severity": "moderate",
+        "suggestion": "Expand on experience with data-intensive or real-time user interfaces, third-party tool integrations, and operational logistics systems."
+      },
+      {
+        "requirement": "Hands-on experience building backend services and APIs.",
+        "severity": "minor",
+        "suggestion": "Highlight additional projects that demonstrate expertise in backend development and API integration."
+      }
+    ],
+    "strengths": [
+      "Demonstrated success in mission-critical software development for high-stakes operations.",
+      "Strong background in remote driving technology and real-time systems integration.",
+      "Proven experience working with design systems to build consistent, scalable interfaces."
+    ],
+    "overallAssessment": "The resume covers most of the job requirements but lacks depth in certain areas. The candidate has a strong foundation in full-stack development, backend services, and real-time systems integration. However, additional projects showcasing expertise in data-intensive user interfaces, third-party tool integrations, and operational logistics would enhance the application."
+  },
+  "factCheck": null,
+  "pdfGenerated": false
+}

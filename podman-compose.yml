@@ -8,11 +8,18 @@ services:
     ports:
       - "4445:5173"
     volumes:
-      - ./frontend:/app
+      - ./frontend:/app:cached
       - /app/node_modules
     depends_on:
       - backend
     restart: unless-stopped
+    environment:
+      - NODE_ENV=development
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5173 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   backend:
     build:
@@ -21,19 +28,22 @@ services:
     ports:
       - "4446:3000"
     volumes:
-      - ./backend:/app
+      - ./backend:/app:cached
       - ./data:/app/data
       - /app/node_modules
     environment:
       - NODE_ENV=development
       - PORT=3000
       - DATA_DIR=/app/data
+      - LLM_ENDPOINT=http://host.containers.internal:11434
+      - LLM_MODEL=qwen2.5:1.5b
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
 
 volumes:
   data:
+    driver: local

@@ -13,8 +13,8 @@ import { getSettings } from './storageService.js';
  */
 export async function callLLM(prompt, options = {}) {
   const settings = await getSettings();
-  const endpoint = settings.llm?.endpoint || 'http://localhost:11434';
-  const model = options.model || settings.llm?.model || 'llama3.2:3b';
+  const endpoint = settings.llm?.endpoint || process.env.LLM_ENDPOINT || 'http://localhost:11434';
+  const model = options.model || settings.llm?.model || process.env.LLM_MODEL || 'qwen2.5:1.5b';
 
   const url = `${endpoint}/api/generate`;
 
@@ -56,8 +56,8 @@ export async function callLLM(prompt, options = {}) {
  */
 export async function callLLMStream(prompt, onChunk, options = {}) {
   const settings = await getSettings();
-  const endpoint = settings.llm?.endpoint || 'http://localhost:11434';
-  const model = options.model || settings.llm?.model || 'llama3.2:3b';
+  const endpoint = settings.llm?.endpoint || process.env.LLM_ENDPOINT || 'http://localhost:11434';
+  const model = options.model || settings.llm?.model || process.env.LLM_MODEL || 'qwen2.5:1.5b';
 
   const url = `${endpoint}/api/generate`;
 
@@ -174,7 +174,7 @@ Return ONLY the JSON array, no explanations.`;
  */
 export async function testOllamaConnection() {
   const settings = await getSettings();
-  const endpoint = settings.llm?.endpoint || 'http://localhost:11434';
+  const endpoint = settings.llm?.endpoint || process.env.LLM_ENDPOINT || 'http://localhost:11434';
 
   try {
     const response = await fetch(`${endpoint}/api/tags`);
@@ -191,7 +191,7 @@ export async function testOllamaConnection() {
  */
 export async function listOllamaModels() {
   const settings = await getSettings();
-  const endpoint = settings.llm?.endpoint || 'http://localhost:11434';
+  const endpoint = settings.llm?.endpoint || process.env.LLM_ENDPOINT || 'http://localhost:11434';
 
   try {
     const response = await fetch(`${endpoint}/api/tags`);

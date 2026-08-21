@@ -95,7 +95,7 @@ export default function TryoutsTab() {
 
   async function fetchTryoutDetails(tryoutId) {
     try {
-      const res = await fetch(`/api/tryouts/${tryoutId}`)
+      const res = await fetch(`/api/applications/${selectedAppId}/tryouts/${tryoutId}`)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = await res.json()
       setSelectedTryout(data.data)
@@ -126,7 +126,7 @@ export default function TryoutsTab() {
     setAnalyzing(true)
     setError(null)
     try {
-      const res = await fetch(`/api/tryouts/${tryoutId}/gap-analysis`, {
+      const res = await fetch(`/api/applications/${selectedAppId}/tryouts/${tryoutId}/gap-analysis`, {
         method: 'POST'
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -141,7 +141,7 @@ export default function TryoutsTab() {
     setFactChecking(true)
     setError(null)
     try {
-      const res = await fetch(`/api/tryouts/${tryoutId}/fact-check`, {
+      const res = await fetch(`/api/applications/${selectedAppId}/tryouts/${tryoutId}/fact-check`, {
         method: 'POST'
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -154,7 +154,7 @@ export default function TryoutsTab() {
 
   async function updateResume(tryoutId, content) {
     try {
-      const res = await fetch(`/api/tryouts/${tryoutId}`, {
+      const res = await fetch(`/api/applications/${selectedAppId}/tryouts/${tryoutId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resumeContent: content })

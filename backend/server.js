@@ -48,13 +48,83 @@ app.use('/api/applications', applicationsRouter);
 // Mount Tryouts router (nested under applications)
 app.use('/api/applications/:applicationId', tryoutsRouter);
 
-// Prompts routes (placeholders)
-app.get('/api/applications/:id/prompts', (req, res) => {
-  res.json({ message: 'Prompts list endpoint - to be implemented', applicationId: req.params.id });
-});
+// Prompts routes - test endpoint for prompt templates
+app.post('/api/prompts/:id/test', async (req, res) => {
+  try {
+    console.log('[PROMPTS] Test request received');
+    const { inputVariables, prompt } = req.body;
+    console.log('[PROMPTS] Input variables:', inputVariables);
 
-app.post('/api/prompts/:id/generate', (req, res) => {
-  res.json({ message: 'Generate prompt endpoint - to be implemented', id: req.params.id });
+    if (!prompt) {
+      return res.status(400).json({ error: 'Prompt content is required' });
+    }
+
+    // Process template variables
+    let processedPrompt = prompt;
+    if (inputVariables) {
+      Object.entries(inputVariables).forEach(([key, value]) => {
+        // Escape special regex characters by replacing {key} pattern directly
+        const searchStr = '{' + key + '}';
+        const replaceStr = value || `[Sample ${key}]`;
+        processedPrompt = processedPrompt.split(searchStr).join(replaceStr);
+      });
+    }
+    console.log('[PROMPTS] Processed prompt length:', processedPrompt.length);
+
+    // Get LLM endpoint from settings or environment
+    try {
+      const { getSettings } = await import('./services/storageService.js');
+      const settings = await getSettings();
+      const endpoint = settings.llm?.endpoint || process.env.LLM_ENDPOINT || 'http://localhost:11434';
+      console.log('[PROMPTS] Using LLM endpoint:', endpoint);
+
+      // Try to make actual API call
+      try {
+        const response = await fetch(`${endpoint}/api/generate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'qwen2.5:1.5b',
+            prompt: processedPrompt,
+            stream: false,
+            options: { temperature: 0.7 }
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('[PROMPTS] LLM response received');
+          res.json({
+            success: true,
+            processedPrompt,
+            response: data.response || 'No response',
+            endpoint
+          });
+          return;
+        } else {
+          console.log('[PROMPTS] LLM API returned:', response.status, response.statusText);
+        }
+      } catch (apiErr) {
+        console.log('[PROMPTS] LLM API call failed:', apiErr.message);
+      }
+    } catch (settingsErr) {
+      console.log('[PROMPTS] Settings load failed:', settingsErr.message);
+    }
+
+    // Return template preview when LLM is unavailable
+    res.json({
+      success: true,
+      processedPrompt,
+      response: '[LLM API unavailable - showing template preview]',
+      note: 'Actual LLM generation requires running Ollama'
+    });
+  } catch (err) {
+    console.error('[PROMPTS] Error testing prompt:', err);
+    res.status(500).json({
+      error: err.message,
+      stack: err.stack
+    });
+  }
 });
 
 // Interview Primers routes

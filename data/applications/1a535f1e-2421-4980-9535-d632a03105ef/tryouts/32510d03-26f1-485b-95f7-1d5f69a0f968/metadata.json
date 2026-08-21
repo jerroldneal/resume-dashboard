@@ -1,0 +1,54 @@
+{
+  "id": "32510d03-26f1-485b-95f7-1d5f69a0f968",
+  "applicationId": "1a535f1e-2421-4980-9535-d632a03105ef",
+  "version": 1,
+  "createdAt": "2026-08-18T19:36:25.747Z",
+  "updatedAt": "2026-08-18T20:14:23.247Z",
+  "gapAnalysis": {
+    "coverage": 85,
+    "gaps": [
+      {
+        "requirement": "Strong full-stack depth",
+        "severity": "critical",
+        "suggestion": "Additional experience in building data-intensive or real-time user interfaces, integrating third-party tools or platforms, and background in operational, logistics, or mobility-related systems would be beneficial."
+      },
+      {
+        "requirement": "Hands-on experience with design systems to build consistent, scalable interfaces",
+        "severity": "moderate",
+        "suggestion": "Additional experience working closely with non-engineering stakeholders (Ops, CS, Product) and understanding of operational, logistics, or mobility-related systems would be helpful."
+      },
+      {
+        "requirement": "Proven experience working with design systems to build consistent, scalable interfaces",
+        "severity": "minor",
+        "suggestion": "Additional experience in translating complex workflows into clear, efficient, and error-resistant user experiences would be beneficial."
+      }
+    ],
+    "strengths": [
+      "Strong full-stack depth"
+    ],
+    "overallAssessment": "The resume covers most of the job requirements but has gaps in hands-on design systems experience and proven experience with non-engineering stakeholders. The candidate's strong full-stack depth is a significant strength, making them well-suited for this role."
+  },
+  "factCheck": {
+    "claims": [
+      {
+        "statement": "Partnered with Directors to define and execute an engineering roadmap for operations platform, dispatch, routing, and navigation backends.",
+        "verifiable": true,
+        "concern": "moderate",
+        "suggestion": "Provide specific details on the partnership and how it was structured (e.g., roles, responsibilities). Ensure that the timeline is realistic based on typical project timelines for such initiatives.",
+        "category": "responsibility"
+      },
+      {
+        "statement": "Built mission-critical operational tools for Vay, integrating remote-driving technology into commercial vehicle fleets and enhancing fleet management.",
+        "verifiable": true,
+        "concern": "none",
+        "suggestion": "",
+        "category": "technology"
+      }
+    ],
+    "overallCredibility": "high",
+    "recommendations": [
+      "Provide specific examples of the operational tools built, including their purpose and impact on fleet management."
+    ]
+  },
+  "pdfGenerated": false
+}

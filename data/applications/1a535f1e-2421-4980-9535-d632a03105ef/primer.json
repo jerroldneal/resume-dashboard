@@ -1,0 +1,32 @@
+{
+  "questions": [
+    {
+      "question": "Can you describe a time when you collaborated with cross-functional teams to drive impactful change?",
+      "category": "behavioral",
+      "suggestedAnswer": "In my previous role, I worked closely with Operations, Customer Support, Engineering, and Product teams. We identified an inefficiency in our fleet management system that could significantly improve customer experience. By combining everyone's expertise, we developed a solution that reduced the average trip time by 20% while improving reliability rates by 15%. This project required coordination across multiple departments and demonstrated the importance of effective communication and collaboration.",
+      "truthfulOut": null
+    },
+    {
+      "question": "How do you approach translating complex workflows into user-friendly interfaces?",
+      "category": "technical",
+      "suggestedAnswer": "I start by breaking down complex processes into smaller, more manageable tasks. I then use design systems to ensure consistency and scalability across the interface. For real-time dashboards, I focus on clear visual indicators and intuitive navigation to help users quickly understand their fleet status. This approach requires a strong understanding of user needs and effective communication with stakeholders.",
+      "truthfulOut": null
+    },
+    {
+      "question": "Can you discuss your experience integrating third-party tools into operational systems?",
+      "category": "technical",
+      "suggestedAnswer": "Yes, I have extensive experience integrating external platforms like Telematics Solutions and GPS providers into our fleet management system. This integration has streamlined our data collection process by providing real-time telemetry for better vehicle health monitoring. The key was identifying the right APIs, setting up secure integrations, and ensuring seamless data flow between systems.",
+      "truthfulOut": null
+    },
+    {
+      "question": "How do you ensure software quality and performance during development?",
+      "category": "technical",
+      "suggestedAnswer": "I implement rigorous testing strategies from the start, including unit tests, integration tests, and system tests. I also focus on optimizing code for performance and efficiency to ensure our systems can handle high volumes of data or complex queries. Additionally, I mentor engineers to build a culture that values quality and continuous improvement.",
+      "truthfulOut": null
+    }
+  ],
+  "overallStrategy": "Focus on technical skills and experience demonstrated in previous roles.",
+  "generated": "2026-08-18T21:18:31.602Z",
+  "applicationId": "1a535f1e-2421-4980-9535-d632a03105ef",
+  "tryoutId": "32510d03-26f1-485b-95f7-1d5f69a0f968"
+}
